@@ -74,7 +74,7 @@ services:
     ports:
       - "6030-6042:6030-6042"
     environment:
-      - TZ: UTC
+      - TZ: "UTC"
     restart: unless-stopped
     volumes:
       - ./tdengine:/var/lib/taos
@@ -89,7 +89,7 @@ services:
       POSTGRES_PASSWORD: pwddamdev
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
-      TZ: UTC
+      TZ: "UTC"
     networks:
       - damiotdevnet
     volumes:
