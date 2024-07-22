@@ -1,27 +1,21 @@
-ARG GRAFANA_VERSION="10.2.3"
-
+ARG GRAFANA_VERSION="latest"
 FROM grafana/grafana:${GRAFANA_VERSION}
 
 # Set Grafana options
 ENV GF_ENABLE_GZIP=true
 ENV GF_USERS_DEFAULT_THEME=light
-#ENV GF_FEATURE_TOGGLES_ENABLE=topnav
+ENV GF_FEATURE_TOGGLES_ENABLE=topnav
 
-# Updates Check
-ENV GF_ANALYTICS_CHECK_FOR_UPDATES=false
+# Updates Check (Optional)
+# Disabilitati di default, decommentate se necessario
+#ENV GF_ANALYTICS_CHECK_FOR_UPDATES=false
 #ENV GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES=false
 
-##################################################################
-## INI
-##################################################################
-
+# Copia il file grafana.ini
 COPY grafana.ini /etc/grafana/grafana.ini
-#COPY datasources.yaml  /etc/grafana/provisioning/datasources/datasources.yaml
-#COPY dashboards.yaml /etc/grafana/provisioning/dashboards/dashboards.yaml
-#COPY dashboards /etc/grafana/provisioning/dashboards/demo
 
+# Non modificare l'utente Grafana
 USER grafana
 
-## Entrypoint
-#ENTRYPOINT [ "/bin/bash", "/entrypoint.sh" ]
-ENTRYPOINT [ "/run.sh" ]
+# Entrypoint (lasciato inalterato)
+ENTRYPOINT ["/run.sh"]

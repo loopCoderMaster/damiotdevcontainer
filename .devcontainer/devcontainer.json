@@ -1,9 +1,9 @@
 {
     "name": "DAM Dev IoT",
     //"image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-    "build": {
-        "dockerfile": "Dockerfile" 
-    },
+    //"build": {
+    //    "dockerfile": "Dockerfile" 
+    //},
     "features": {
       "ghcr.io/devcontainers/features/node:1": { 
         "version": "latest"
@@ -32,8 +32,8 @@
     "postCreateCommand": "docker-compose up -d",
     "dockerComposeFile": "docker-compose.yml",
     "service": "app",
-	// The optional 'workspaceFolder' property is the path VS Code should open by default when
-	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	  // The optional 'workspaceFolder' property is the path VS Code should open by default when
+	  // connected. This is typically a file mount in .devcontainer/docker-compose.yml
+	  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "forwardPorts": [3000, 4222, 27017, 1880, 6030, 6031, 6032, 6033, 6034, 6035, 6036, 6037, 6038, 6039, 6040, 6041, 6042]
   }

@@ -1,0 +1,11 @@
+{
+    "editor.formatOnSave": true,
+    "files.associations": {
+        "*.ino": "cpp"
+    },
+    "editor.fontSize": 14,
+    "editor.tabSize": 4,
+    "editor.renderWhitespace": "all",
+    "editor.minimap.enabled": true,
+    "editor.wordWrap": "on"
+}
