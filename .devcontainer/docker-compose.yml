@@ -130,6 +130,24 @@ services:
       - damiotdevnet
     volumes:
       - ekpmanager_data:/ekuiper-manager/data
+  
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=pwddamdev
+      - N8N_HOST=n8n
+      - DB_TYPE=sqlite
+      - DB_SQLITE_FILE=/home/node/.n8n/database.sqlite
+      - WEBHOOK_URL=http://n8n:5678/
+    volumes:
+      - ./n8n:/home/node/.n8n 
+    networks:
+      - damiotdevnet
 
   portainer:
     image: portainer/portainer-ce:latest
@@ -151,6 +169,7 @@ volumes:
   ekuiper_log:
   ekpmanager_data:
   timescaledb_data:
+  n8n_data:
   portainer_data:
 
 networks:
