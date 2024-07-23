@@ -29,7 +29,7 @@
       }
     }
   },
-  //"postCreateCommand": "docker-compose up -d",
+  "postCreateCommand": "docker-compose up -d",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   // The optional 'workspaceFolder' property is the path VS Code should open by default when
