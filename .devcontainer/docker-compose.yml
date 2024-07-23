@@ -36,7 +36,7 @@ services:
     networks:
       - damiotdevnet
     volumes:
-      - ../services/grafana:/var/lib/grafana
+      - /workspaces/iot/services/grafana:/var/lib/grafana 
 
   nats:
     image: nats:latest
@@ -64,6 +64,8 @@ services:
     #  context: ../services/node-red
     #  dockerfile: Dockerfile
     image: nodered/node-red:latest
+    container_name: node-red
+    restart: unless-stopped
     environment:
       - TZ=UTC
     ports:
