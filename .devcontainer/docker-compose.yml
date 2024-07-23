@@ -22,9 +22,10 @@ services:
     # (Adding the "ports" property to this file will not forward from a Codespace.)
    
   grafana:
-    build:
-      context: ../services/grafana
-      dockerfile: Dockerfile
+    #build:
+    #  context: ../services/grafana
+    #  dockerfile: Dockerfile
+    image: grafana/grafana:latest
     container_name: grafana
     ports:
       - "3000:3000"
@@ -32,7 +33,13 @@ services:
     environment:
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: pwddamdev
-      GF_LOG_LEVEL: info  
+      GF_LOG_LEVEL: info
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_BASIC_ENABLED: false
+      GF_ENABLE_GZIP: true
+      GF_USERS_DEFAULT_THEME: light
+      GF_SECURITY_ALLOW_EMBEDDING: true
     networks:
       - damiotdevnet
     volumes:
