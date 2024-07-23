@@ -5,7 +5,7 @@ set -e
 echo "Start postCreateCommand.sh script."
 
 # Imposta il working directory alla root del progetto
-cd /workspaces/${localWorkspaceFolderBasename}
+#cd /workspaces/${localWorkspaceFolderBasename}
 #cd /workspaces/dev
 
 # Avvia i servizi Docker Compose in background
