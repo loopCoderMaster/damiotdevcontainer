@@ -22,7 +22,9 @@ services:
     # (Adding the "ports" property to this file will not forward from a Codespace.)
    
   grafana:
-    build: ./services/grafana
+    build:
+      context: ./services/grafana
+      dockerfile: Dockerfile
     container_name: grafana
     ports:
       - "3000:3000"
@@ -58,7 +60,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pwddamdev
 
   node-red:
-    build: ./services/node-red
+    build:
+      context: ./services/node-red
+      dockerfile: Dockerfile
     ports:
       - "1880:1880"
     restart: unless-stopped
