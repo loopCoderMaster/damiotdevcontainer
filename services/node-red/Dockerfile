@@ -8,7 +8,7 @@ WORKDIR /usr/src/node-red
 RUN npm install -g --unsafe-perm node-red
 
 # Copia i dati di Node-RED (flussi, impostazioni, ecc.) nel container
-COPY ../services/node-red/data /data
+#COPY ../services/node-red/data /data
 
 # Imposta l'utente node-red per motivi di sicurezza
 USER node-red
