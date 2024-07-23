@@ -70,7 +70,6 @@ services:
       - TZ=UTC
     ports:
       - "1880:1880"
-    restart: unless-stopped
     volumes:
       - node-red-data:/data
     networks:
