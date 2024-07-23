@@ -29,13 +29,13 @@
       }
     }
   },
-  "postCreateCommand": "./scripts/postCreateCommand.sh",
+  "postCreateCommand": "/workspaces/dev/scripts/postCreateCommand.sh",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   // The optional 'workspaceFolder' property is the path VS Code should open by default when
   // connected. This is typically a file mount in .devcontainer/docker-compose.yml
   //"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-  //"workspaceFolder": "/workspaces/dev",
+  "workspaceFolder": "/workspaces/dev",
   //"mounts": [
   //    "source=${localWorkspaceFolder}/.vscode,target=/workspace/dev/.vscode,type=bind"
   //],
