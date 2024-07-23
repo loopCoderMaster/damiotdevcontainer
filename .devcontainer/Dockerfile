@@ -1,5 +1,5 @@
 # Image di base
-FROM mcr.microsoft.com/devcontainers/base:ubuntu #-${templateOption:imageVariant}
+FROM mcr.microsoft.com/devcontainers/base:jammy #-${templateOption:imageVariant}
 
 # Installazione dei pacchetti di base
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
