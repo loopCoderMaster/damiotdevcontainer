@@ -36,7 +36,7 @@ services:
     networks:
       - damiotdevnet
     volumes:
-      - /workspaces/iot/services/grafana:/var/lib/grafana 
+      - grafana_data:/var/lib/grafana 
 
   nats:
     image: nats:latest
