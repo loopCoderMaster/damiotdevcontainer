@@ -66,8 +66,8 @@ services:
     ports:
       - "1880:1880"
     restart: unless-stopped
-    volumes:
-       - ../services/node-red/data:/data
+    #volumes:
+    #   - ../services/node-red/data:/data
     networks:
       - damiotdevnet
 
