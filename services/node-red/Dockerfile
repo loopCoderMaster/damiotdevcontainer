@@ -1,20 +1,18 @@
-# Usa l'ultima versione di Node.js Long Term Support (LTS)
-FROM node:lts
+# https://nodered.org/docs/getting-started/docker
+FROM nodered/node-red
 
 # Crea una directory di lavoro per Node-RED
+WORKDIR /data
+
+# Copy package.json to the WORKDIR so npm builds all
+# of your added nodes modules for Node-RED
+COPY package.json /data
+RUN npm install --unsafe-perm --no-update-notifier --no-fund --only=production
 WORKDIR /usr/src/node-red
 
-# Installa Node-RED globalmente
-RUN npm install -g --unsafe-perm node-red
-
-# Copia i dati di Node-RED (flussi, impostazioni, ecc.) nel container
-#COPY ../services/node-red/data /data
-
-# Imposta l'utente node-red per motivi di sicurezza
-#USER node-red
-
-# Esponi la porta 1880 (usata di default da Node-RED)
-EXPOSE 1880
-
-# Comando di avvio di Node-RED
-CMD ["node-red", "-u", "/data"]
+# Copy _your_ Node-RED project files into place
+# NOTE: This will only work if you DO NOT later mount /data as an external volume.
+#       If you need to use an external volume for persistence then
+#       copy your settings and flows files to that volume instead.
+#COPY settings.js /data/settings.js
+#COPY flows.json /data/flows.json
