@@ -11,7 +11,7 @@ RUN npm install -g --unsafe-perm node-red
 #COPY ../services/node-red/data /data
 
 # Imposta l'utente node-red per motivi di sicurezza
-USER node-red
+#USER node-red
 
 # Esponi la porta 1880 (usata di default da Node-RED)
 EXPOSE 1880
