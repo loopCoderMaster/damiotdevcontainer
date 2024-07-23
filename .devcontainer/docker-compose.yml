@@ -60,14 +60,17 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: pwddamdev
 
   node-red:
-    build:
-      context: ../services/node-red
-      dockerfile: Dockerfile
+    #build:
+    #  context: ../services/node-red
+    #  dockerfile: Dockerfile
+    image: nodered/node-red:latest
+    environment:
+      - TZ=UTC
     ports:
       - "1880:1880"
     restart: unless-stopped
-    #volumes:
-    #   - ../services/node-red/data:/data
+    volumes:
+      - node-red-data:/data
     networks:
       - damiotdevnet
 
@@ -163,6 +166,7 @@ services:
 
 volumes:
   grafana_data:
+  node-red-data:
   ekuiper_data:
   ekuiper_etc:
   ekuiper_connections:
