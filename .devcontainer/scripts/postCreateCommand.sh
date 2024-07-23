@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Imposta il working directory alla root del progetto
-cd /workspaces/${localWorkspaceFolderBasename}
+#cd /workspaces/${localWorkspaceFolderBasename}
 
 # Avvia i servizi Docker Compose in background
 docker-compose up -d
