@@ -23,7 +23,7 @@ services:
    
   grafana:
     build:
-      context: ./services/grafana
+      context: ../services/grafana
       dockerfile: Dockerfile
     container_name: grafana
     ports:
@@ -36,7 +36,7 @@ services:
     networks:
       - damiotdevnet
     volumes:
-      - ./services/grafana:/var/lib/grafana
+      - ../services/grafana:/var/lib/grafana
 
   nats:
     image: nats:latest
@@ -61,13 +61,13 @@ services:
 
   node-red:
     build:
-      context: ./services/node-red
+      context: ../services/node-red
       dockerfile: Dockerfile
     ports:
       - "1880:1880"
     restart: unless-stopped
     volumes:
-       - ./services/node-red/data:/data
+       - ../services/node-red/data:/data
     networks:
       - damiotdevnet
 
