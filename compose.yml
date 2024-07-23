@@ -1,1 +1,165 @@
+name: damiotdev
 
+services:  
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: pwddamdev
+      GF_LOG_LEVEL: info
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_BASIC_ENABLED: false
+      GF_ENABLE_GZIP: true
+      GF_USERS_DEFAULT_THEME: light
+      GF_SECURITY_ALLOW_EMBEDDING: true
+    networks:
+      - damiotdevnet
+    volumes:
+      - grafana_data:/var/lib/grafana 
+
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+    restart: unless-stopped
+    networks:
+      - damiotdevnet
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    restart: unless-stopped
+    volumes:
+      - ./mongodb:/data/db
+    networks:
+      - damiotdevnet
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: pwddamdev
+
+  node-red:
+    image: nodered/node-red:latest
+    container_name: node-red
+    restart: unless-stopped
+    environment:
+      - TZ=UTC
+    ports:
+      - "1880:1880"
+    volumes:
+      - node-red-data:/data
+    networks:
+      - damiotdevnet
+
+  tdengine:
+    image: tdengine/tdengine:latest
+    ports:
+      - "6030-6042:6030-6042"
+    environment:
+      TZ: UTC
+    restart: unless-stopped
+    volumes:
+      - ./tdengine:/var/lib/taos
+    networks:
+      - damiotdevnet
+  
+  timescaledb:
+    image: timescale/timescaledb:latest-pg16
+    container_name: timeseriesdb
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: pwddamdev
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      TZ: UTC
+    networks:
+      - damiotdevnet
+    volumes:
+      - timescaledb_data:/var/lib/postgresql/data 
+
+  ekuiper:
+    image: lfedge/ekuiper:latest
+    container_name: ekuiper
+    restart: always
+    user: root
+    ports:
+      - "9081:9081" 
+    networks:
+      - damiotdevnet
+    volumes:
+      - ekuiper_data:/kuiper/data
+      - ekuiper_etc:/kuiper/etc
+      - ekuiper_connections:/kuiper/etc/connections
+      - ekuiper_sources:/kuiper/etc/sources
+      - ekuiper_plugins:/kuiper/plugins
+      - ekuiper_log:/kuiper/log
+    environment:
+      #MQTT_SOURCE__DEFAULT__SERVER: ${MQTT_SOURCE__DEFAULT__SERVER} 
+      KUIPER__BASIC__CONSOLELOG: true
+      KUIPER__BASIC__IGNORECASE: true
+    depends_on:
+      - timescaledb  
+  
+  ekpmanager:
+    image: emqx/ekuiper-manager:latest
+    container_name: ekpmanager
+    restart: on-failure
+    environment:
+      - DEFAULT_EKUIPER_ENDPOINT=http://ekuiper:9081
+    depends_on:
+      - ekuiper
+    networks:
+      - damiotdevnet
+    volumes:
+      - ekpmanager_data:/ekuiper-manager/data
+  
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=pwddamdev
+      - N8N_HOST=n8n
+      - DB_TYPE=sqlite
+      - DB_SQLITE_FILE=/home/node/.n8n/database.sqlite
+      - WEBHOOK_URL=http://n8n:5678/
+    volumes:
+      - ./n8n:/home/node/.n8n 
+    networks:
+      - damiotdevnet
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - damiotdevnet
+
+volumes:
+  grafana_data:
+  node-red-data:
+  ekuiper_data:
+  ekuiper_etc:
+  ekuiper_connections:
+  ekuiper_sources:
+  ekuiper_plugins:
+  ekuiper_log:
+  ekpmanager_data:
+  timescaledb_data:
+  n8n_data:
+  portainer_data:
+
+networks:
+  damiotdevnet:
+    driver: bridge
