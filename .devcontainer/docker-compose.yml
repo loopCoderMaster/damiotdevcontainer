@@ -23,7 +23,7 @@ services:
    
   grafana:
     build:
-      context: ../services/grafana
+      context: ./services/grafana
       dockerfile: Dockerfile
     container_name: grafana
     ports:
